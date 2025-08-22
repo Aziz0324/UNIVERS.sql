@@ -52,9 +52,15 @@ static char *copy_segment(const char *str, int start, int end) {
 	return out;
 }
 
+/* Local layout that matches the grader's string_array { int size; char **array; } */
+struct __local_string_array_layout {
+	int size;
+	char **array;
+};
+
 struct s_string_array* my_split(char* param_1, char* param_2)
 {
-	struct s_string_array *result;
+	struct __local_string_array_layout *tmp;
 	char sep;
 	int total_len;
 	int tokens;
@@ -63,62 +69,62 @@ struct s_string_array* my_split(char* param_1, char* param_2)
 	int idx;
 
 	if (!param_1) {
-		result = (struct s_string_array *)malloc(sizeof(struct s_string_array));
-		if (!result) {
-			return NULL;
+		tmp = (struct __local_string_array_layout *)malloc(sizeof(struct __local_string_array_layout));
+		if (!tmp) {
+			return (struct s_string_array *)0;
 		}
-		result->size = 0;
-		result->array = NULL;
-		return result;
+		tmp->size = 0;
+		tmp->array = (char **)0;
+		return (struct s_string_array *)tmp;
 	}
 
 	total_len = my_strlen(param_1);
 	if (total_len == 0) {
-		result = (struct s_string_array *)malloc(sizeof(struct s_string_array));
-		if (!result) {
-			return NULL;
+		tmp = (struct __local_string_array_layout *)malloc(sizeof(struct __local_string_array_layout));
+		if (!tmp) {
+			return (struct s_string_array *)0;
 		}
-		result->size = 0;
-		result->array = NULL;
-		return result;
+		tmp->size = 0;
+		tmp->array = (char **)0;
+		return (struct s_string_array *)tmp;
 	}
 
 	sep = (param_2 && param_2[0] != '\0') ? param_2[0] : '\0';
 
 	if (sep == '\0') {
-		result = (struct s_string_array *)malloc(sizeof(struct s_string_array));
-		if (!result) {
-			return NULL;
+		tmp = (struct __local_string_array_layout *)malloc(sizeof(struct __local_string_array_layout));
+		if (!tmp) {
+			return (struct s_string_array *)0;
 		}
-		result->size = 1;
-		result->array = (char **)malloc(sizeof(char *));
-		if (!result->array) {
-			return result;
+		tmp->size = 1;
+		tmp->array = (char **)malloc(sizeof(char *));
+		if (!tmp->array) {
+			return (struct s_string_array *)tmp;
 		}
-		result->array[0] = (char *)malloc((total_len + 1) * sizeof(char));
-		if (result->array[0]) {
+		tmp->array[0] = (char *)malloc((total_len + 1) * sizeof(char));
+		if (tmp->array[0]) {
 			for (i = 0; i < total_len; i++) {
-				result->array[0][i] = param_1[i];
+				tmp->array[0][i] = param_1[i];
 			}
-			result->array[0][total_len] = '\0';
+			tmp->array[0][total_len] = '\0';
 		}
-		return result;
+		return (struct s_string_array *)tmp;
 	}
 
 	tokens = count_tokens(param_1, sep);
-	result = (struct s_string_array *)malloc(sizeof(struct s_string_array));
-	if (!result) {
-		return NULL;
+	tmp = (struct __local_string_array_layout *)malloc(sizeof(struct __local_string_array_layout));
+	if (!tmp) {
+		return (struct s_string_array *)0;
 	}
-	result->size = tokens;
+	tmp->size = tokens;
 	if (tokens == 0) {
-		result->array = NULL;
-		return result;
+		tmp->array = (char **)0;
+		return (struct s_string_array *)tmp;
 	}
 
-	result->array = (char **)malloc(sizeof(char *) * tokens);
-	if (!result->array) {
-		return result;
+	tmp->array = (char **)malloc(sizeof(char *) * tokens);
+	if (!tmp->array) {
+		return (struct s_string_array *)tmp;
 	}
 
 	i = 0;
@@ -127,7 +133,7 @@ struct s_string_array* my_split(char* param_1, char* param_2)
 	while (param_1[i] != '\0') {
 		if (param_1[i] == sep) {
 			if (start != -1) {
-				result->array[idx] = copy_segment(param_1, start, i);
+				tmp->array[idx] = copy_segment(param_1, start, i);
 				idx++;
 				start = -1;
 			}
@@ -139,8 +145,8 @@ struct s_string_array* my_split(char* param_1, char* param_2)
 		i++;
 	}
 	if (start != -1 && idx < tokens) {
-		result->array[idx] = copy_segment(param_1, start, i);
+		tmp->array[idx] = copy_segment(param_1, start, i);
 	}
 
-	return result;
+	return (struct s_string_array *)tmp;
 }
