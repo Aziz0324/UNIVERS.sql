@@ -53,7 +53,7 @@ static void print_tree(int size) {
     }
 
     int trunk_height = size;
-    int trunk_width = (size % 2 == 0) ? (size + 1) : size;
+    int trunk_width = size;
     int trunk_left_padding = (max_width - trunk_width) / 2;
 
     for (int i = 0; i < trunk_height; ++i) {
