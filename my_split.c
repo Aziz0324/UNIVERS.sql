@@ -1,9 +1,5 @@
 #include <stdlib.h>
 
-typedef struct s_string_array {
-	int size;
-	char **array;
-} string_array;
 
 static int my_strlen(const char *str) {
 	int length = 0;
