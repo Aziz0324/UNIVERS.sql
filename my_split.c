@@ -53,9 +53,9 @@ static char *copy_segment(const char *str, int start, int end) {
 	return out;
 }
 
-string_array* my_split(char* param_1, char* param_2)
+struct s_string_array* my_split(char* param_1, char* param_2)
 {
-	string_array *result;
+	struct s_string_array *result;
 	char sep;
 	int total_len;
 	int tokens;
@@ -64,7 +64,7 @@ string_array* my_split(char* param_1, char* param_2)
 	int idx;
 
 	if (!param_1) {
-		result = (string_array *)malloc(sizeof(string_array));
+		result = (struct s_string_array *)malloc(sizeof(struct s_string_array));
 		if (!result) {
 			return NULL;
 		}
@@ -75,7 +75,7 @@ string_array* my_split(char* param_1, char* param_2)
 
 	total_len = my_strlen(param_1);
 	if (total_len == 0) {
-		result = (string_array *)malloc(sizeof(string_array));
+		result = (struct s_string_array *)malloc(sizeof(struct s_string_array));
 		if (!result) {
 			return NULL;
 		}
@@ -88,7 +88,7 @@ string_array* my_split(char* param_1, char* param_2)
 
 	if (sep == '\0') {
 		/* No valid separator provided: return the whole string as a single element */
-		result = (string_array *)malloc(sizeof(string_array));
+		result = (struct s_string_array *)malloc(sizeof(struct s_string_array));
 		if (!result) {
 			return NULL;
 		}
@@ -108,7 +108,7 @@ string_array* my_split(char* param_1, char* param_2)
 	}
 
 	tokens = count_tokens(param_1, sep);
-	result = (string_array *)malloc(sizeof(string_array));
+	result = (struct s_string_array *)malloc(sizeof(struct s_string_array));
 	if (!result) {
 		return NULL;
 	}
