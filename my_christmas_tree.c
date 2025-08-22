@@ -54,7 +54,7 @@ static void print_tree(int size) {
 
     int trunk_height = size;
     int trunk_width = size;
-    int trunk_left_padding = (max_width - trunk_width) / 2;
+    int trunk_left_padding = (max_width - trunk_width + 1) / 2;
 
     for (int i = 0; i < trunk_height; ++i) {
         print_repeated_char(' ', trunk_left_padding);
