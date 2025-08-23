@@ -4,8 +4,8 @@
 // Global storage for buffered data between calls
 char *g_storage = NULL;
 
-// Provided by the user/application
-extern int READLINE_READ_SIZE;
+// Global read size (mutable; tester may change it)
+int READLINE_READ_SIZE = 512;
 
 static size_t my_strlen(const char *s)
 {
