@@ -1,0 +1,14 @@
+# UNIVERS.sql
+Makefile
+listdir.c
+listdir.o
+ls.output
+main.c
+main.o
+my_ls
+my_ls.h
+my_ls.output
+sort.c
+sort.o
+util.c
+util.o
